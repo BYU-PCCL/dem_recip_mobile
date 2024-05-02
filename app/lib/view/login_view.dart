@@ -36,25 +36,25 @@ class _LoginPageState extends State<LoginPage> implements LoginView {
           children: <Widget>[
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: "Username"),
+              decoration: const InputDecoration(labelText: "Username"),
             ),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: "Password"),
+              decoration: const InputDecoration(labelText: "Password"),
               obscureText: true,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 _presenter.login(_usernameController.text, _passwordController.text);
               },
-              child: Text("Login"),
+              child: const Text("Login"),
             ),
             TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/signup');
               },
-              child: Text("Not a user? Signup"),
+              child: const Text("Not a user? Signup"),
             ),
           ],
         ),

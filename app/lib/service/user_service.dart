@@ -3,7 +3,7 @@ import 'dart:convert';
 import '../utils/user.dart';
 import '../utils/constants.dart';
 
-class ApiService {
+class UserService {
   static Future<http.Response> login(String username, String password) {
     return http.post(
       Uri.parse('${url}/login'),
@@ -17,18 +17,16 @@ class ApiService {
     );
   }
 
-  static Future<http.Response> signup(User user) {
+  static Future<http.Response> signup(User user, String password, Map<String, String> data) {
     return http.post(
       Uri.parse('${url}/signup'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        'username': user.username,
-        'password': user.password,
-        'firstName': user.firstName,
-        'lastName': user.lastName,
-        'data': user.data
+        'user': user.toJson(),
+        'password': password,
+        'data': data
       }),
     );
   }

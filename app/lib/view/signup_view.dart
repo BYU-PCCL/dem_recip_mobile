@@ -68,15 +68,13 @@ class _SignupPageState extends State<SignupPage> implements SignupView {
               onPressed: () {
                 var user = User(
                   username: _usernameController.text,
-                  password: _passwordController.text,
                   firstName: _firstNameController.text,
                   lastName: _lastNameController.text,
-                  data: {
-                    'birthYear': _birthYearController.text,
-                    'race': _raceController.text,
-                  }
                 );
-                _presenter.signup(user);
+                _presenter.signup(user,  _passwordController.text, {
+                  'birthYear': _birthYearController.text,
+                  'race': _raceController.text,
+                });
               },
               child: const Text("Signup"),
             ),
