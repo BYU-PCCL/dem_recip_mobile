@@ -1,16 +1,22 @@
+import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:flutter/material.dart';
 import './view/login_view.dart';
 import './view/signup_view.dart';
 import './view/home_view.dart';
-// import 'utils/token_manager.dart';
+// ignore: depend_on_referenced_packages
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await TokenManager.initialize(); // Initialize token management
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => AuthProvider()..checkAuthentication(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,9 +27,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
+        '/': (context) => const LoginPage(),
         '/signup': (context) => SignupPage(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => const HomePage(),
       },
     );
   }
