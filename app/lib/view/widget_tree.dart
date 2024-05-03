@@ -1,4 +1,5 @@
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
+import 'package:dem_recip_mobile/view/home_navigator.dart';
 import 'package:dem_recip_mobile/view/home_view.dart';
 import 'package:dem_recip_mobile/view/login_register_view.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       stream: AuthService().authStateChanges, 
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return HomePage();
+          return const HomeNavigator();
         } else {
           return const LoginView();
         }
