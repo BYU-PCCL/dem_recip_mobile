@@ -6,14 +6,10 @@ class UserService:
     def __init__(self, user_dao: UserDao) -> None:
         self.user_dao = user_dao
     
-    def signup_user(self, user: User, password: str, data: dict[str, str]) -> bool:
-        
-        return self.user_dao.create_user(user, password, data)
-    
     def get_user(self, username: str) -> Union[User, None]:
 
         return self.user_dao.get_user(username)
     
-    def validate(self, username: str, password: str) -> bool:
+    def validate(self, token: str) -> tuple[bool, str]:
         
-        return self.user_dao.validate_username_password(username, password)
+        return self.user_dao.validate_username_password(token)

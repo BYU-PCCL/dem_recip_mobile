@@ -1,12 +1,8 @@
 from abc import ABC, abstractmethod
-from ..dto.user import User
 from typing import Union
 
 
 class UserDao(ABC):
-    @abstractmethod
-    def create_user(self, user: User, password: str, data: dict[str, str]) -> bool:
-        pass
 
     @abstractmethod
     def get_user(self, username: str):
@@ -25,5 +21,5 @@ class UserDao(ABC):
         pass
 
     @abstractmethod
-    def validate_username_password(self, username: str, password: str) -> bool:
+    def validate_username_password(self, token: str) -> tuple[bool, str]:
         pass
