@@ -18,8 +18,10 @@ class FirebaseUserDao(UserDao):
             return User(data)
         return None
     
-    def update_user(self, username: str, field_name: str, value: str | int):
-        return super().update_user(username, field_name, value)
+    def update_user(self, username: str, data: dict[str, any]):
+        doc_ref = self.db.collection("user").document(username)
+
+        doc_ref.update(data)
     
     def get_conversations(self, username):
         return super().get_conversations(username)

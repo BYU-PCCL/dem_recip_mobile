@@ -9,7 +9,7 @@ class UserDao(ABC):
         pass
 
     @abstractmethod
-    def update_user(self, username: str, field_name: str, value: Union[str, int]):
+    def update_user(self, username: str, data: dict[str, any]):
         pass
 
     @abstractmethod

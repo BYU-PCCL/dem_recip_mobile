@@ -13,3 +13,7 @@ class UserService:
     def validate(self, token: str) -> tuple[bool, str]:
         
         return self.user_dao.validate_username_password(token)
+    
+    def update_user(self, username: str, data: dict[str, any]):
+
+        return self.user_dao.update_user(username, data)

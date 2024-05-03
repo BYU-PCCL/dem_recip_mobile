@@ -49,3 +49,12 @@ def token_required(f):
 @app.route('/')
 def home():
     return 'Hello, World!'
+
+@app.route('/edit_profile')
+@token_required
+def edit_profile():
+    body = request.json
+
+    data = body['data']
+
+    
