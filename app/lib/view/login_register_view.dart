@@ -48,13 +48,17 @@ class _LoginViewState extends State<LoginView> {
 
     Widget _entryField(
       String title,
-      TextEditingController controller
+      TextEditingController controller,
+      bool isSensitive
     ) {
       return TextField(
         controller: controller,
         decoration: InputDecoration(
           labelText: title
         ),
+        obscureText: isSensitive,
+        enableSuggestions: !isSensitive,
+        autocorrect: !isSensitive,
       );
     }
 
@@ -93,8 +97,8 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            _entryField('email', _controllerEmail),
-            _entryField('password', _controllerPassword),
+            _entryField('email', _controllerEmail, false),
+            _entryField('password', _controllerPassword, true),
             _errorMessage(),
             _submitButton(),
             _loginOrRegisterButton()

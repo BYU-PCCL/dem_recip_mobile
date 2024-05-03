@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1075339147750",
+    "project_id": "demrecipmobile",
+    "storage_bucket": "demrecipmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075339147750:android:aa020002c41aae27ad7e27",
+        "android_client_info": {
+          "package_name": "com.example.dem_recip_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp6Sim08RMlWbGTAsJX3tRR-XonU5HKrc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

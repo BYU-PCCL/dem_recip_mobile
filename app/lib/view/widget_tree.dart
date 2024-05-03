@@ -1,5 +1,3 @@
-
-
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/home_view.dart';
 import 'package:dem_recip_mobile/view/login_register_view.dart';
