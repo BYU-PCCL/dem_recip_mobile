@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, abort
 from data_model.dto.user import User
+from state.states import UserState
 from data_model.dao_factory.factory import FactoryProvider
 from service.user_service import UserService
 import os
@@ -14,7 +15,8 @@ load_dotenv(dotenv_path=env_path)
 app = Flask(__name__)
 
 def token_required(f):
-    def check_token(*args, **kwargs):
+    @wraps(f)
+    def decorated(*args, **kwargs):
         token = None
         if "Authorization" in request.headers:
             token = request.headers["Authorization"].split(" ")[1]
@@ -41,7 +43,7 @@ def token_required(f):
 
         return f(*args, **kwargs)
 
-    return check_token
+    return decorated
 
 
     
@@ -57,4 +59,26 @@ def edit_profile():
 
     data = body['data']
 
-    
+
+@app.route('/get_state', methods=["POST"])
+@token_required
+def get_state():
+    body = request.get_json()
+
+    if 'username' not in body:
+        return {
+            "message": "Username was not included in request body",
+            "data": None,
+            "error": "No username"
+        }, 400
+
+    username = body['username']
+
+    factory = FactoryProvider.getFactory()
+    user_dao = factory.get_user_dao()
+    user = user_dao.get_user(username)
+
+    if not user:
+        return {'data': 1}, 200
+    else:
+        return {'data': 2}, 200

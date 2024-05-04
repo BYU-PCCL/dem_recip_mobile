@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:dem_recip_mobile/view/home_view.dart';
 import 'package:dem_recip_mobile/view/profile_view.dart';
 
-class TabNav extends StatefulWidget {
-  const TabNav({Key? key}) : super(key: key);
+class HomeNavigator extends StatefulWidget {
+  const HomeNavigator({Key? key}) : super(key: key);
 
   @override
-  _TabNavState createState() => _TabNavState();
+  _HomeNavigatorState createState() => _HomeNavigatorState();
 }
 
-class _TabNavState extends State<TabNav> {
+class _HomeNavigatorState extends State<HomeNavigator> {
   int _selectedIndex = 0;
 
   static const List<Widget> _tabs = [

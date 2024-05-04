@@ -14,7 +14,7 @@ class FirebaseUserDao(UserDao):
 
         data = doc_ref.get().to_dict()
 
-        if data.exists:
+        if data and data.exists:
             return User(data)
         return None
     

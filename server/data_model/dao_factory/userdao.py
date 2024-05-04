@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Union
-
+from ..dto.user import User
 
 class UserDao(ABC):
 
     @abstractmethod
-    def get_user(self, username: str):
+    def get_user(self, username: str) -> Union[User, None]:
         pass
 
     @abstractmethod

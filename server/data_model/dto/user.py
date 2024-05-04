@@ -1,10 +1,11 @@
-from dataclasses import dataclass
+from typing import Any
 
-@dataclass
+
 class User:
-    username: str
-    firstName: str
-    lastName: str
-
-    def __init__(self, **entries):
+    def __init__(self, entries):
         self.__dict__.update(**entries)
+
+    def get(self, name: str, default=None):
+        if name not in self.__dict__:
+            return default
+        return self.__dict__.get(name)
