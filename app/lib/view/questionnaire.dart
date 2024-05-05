@@ -1,3 +1,4 @@
+import 'package:dem_recip_mobile/view/question/gender.dart';
 import 'package:flutter/material.dart';
 
 class Questionnaire extends StatefulWidget {
@@ -8,103 +9,53 @@ class Questionnaire extends StatefulWidget {
 }
 
 class _QuestionnaireState extends State<Questionnaire> {
-  String? gender;
-  int? yearBorn;
+  int _currentQuestionIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      contentPadding: EdgeInsets.zero,
       content: Container(
         width: double.maxFinite,
-        child: Column(
+        child: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildQuestion("What is your gender?", [
-              RadioListTile(
-                title: const Text('Male'),
-                value: 'male',
-                groupValue: null, // Provide a value based on user selection
-                onChanged: (value) {
-                  setState(() {
-                    gender = value;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text('Female'),
-                value: 'female',
-                groupValue: null, // Provide a value based on user selection
-                onChanged: (value) {
-                  setState(() {
-                    gender = value;
-                  });
-                },
-              ),
-              RadioListTile(
-                title: const Text('Other'),
-                value: 'other',
-                groupValue: null, // Provide a value based on user selection
-                onChanged: (value) {
-                  setState(() {
-                    gender = value;
-                  });
-                },
-              ),
-            ]),
-            const SizedBox(height: 20),
-            _buildQuestion("In what year were you born?", [
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'Year of Birth',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your birth year';
-                  }
-                  int year = int.tryParse(value) ?? 0;
-                  if (year <= 0 || year >= 2024) {
-                    return 'Please enter a valid birth year';
-                  }
-                  int age = DateTime.now().year - year;
-                  if (age < 13 || age >= 100) {
-                    return 'You must be between 13 and 99 years old';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    yearBorn = value as int?;
-                  });
-                },
-              ),
-            ]),
+            GenderQuestion()
           ],
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop(); // Close the dialog
-          },
-          child: const Text('Submit'),
-        ),
-      ],
+      // actions: [
+      //   ElevatedButton(
+      //     onPressed: () {
+      //       _navigateNext();
+      //     },
+      //     child: Text(_currentQuestionIndex == _questions.length - 1 ? 'Submit' : 'Next'),
+      //   ),
+      // ],
     );
   }
+    
 
-  Widget _buildQuestion(String question, List<Widget> options) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          question,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        ...options,
-      ],
-    );
+  void _navigateNext() {
+    // if (_currentQuestionIndex < _questions.length - 1) {
+    //   setState(() {
+    //     _currentQuestionIndex++;
+    //   });
+    // } else {
+    //   // Handle submit action (e.g., validate and process questionnaire data)
+    //   _submitQuestionnaire();
+    //   Navigator.of(context).pop(); // Close the dialog after submission
+    // }
+  }
+
+  void _submitQuestionnaire() {
+    // // Implement logic to process questionnaire data
+    // String gender = _questions[0]['selectedOption'];
+    // int yearBorn = int.tryParse(_questions[1]['selectedOption'] ?? '') ?? 0;
+
+    // // Print or process collected data
+    // print('Gender: $gender');
+    // print('Year of Birth: $yearBorn');
   }
 }

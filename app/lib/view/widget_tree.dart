@@ -17,7 +17,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       stream: AuthService().authStateChanges, 
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const MainNavigator();
+          return MainNavigator();
         } else {
           return const LoginView();
         }
