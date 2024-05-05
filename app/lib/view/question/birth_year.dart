@@ -1,32 +1,21 @@
+import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
-class BirthYearQuestion extends StatefulWidget {
-  const BirthYearQuestion({Key? key}) : super(key: key);
+class BirthYearQuestion implements Question {
+  @override
+  String get title => 'What year were you born in?';
 
   @override
-  State<BirthYearQuestion> createState() => _BirthYearQuestionState();
-}
-
-class _BirthYearQuestionState extends State<BirthYearQuestion> {
-  final TextEditingController yearBorn = TextEditingController();
-
-  @override
-  void dispose() {
-    yearBorn.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
       children: [
         TextField(
-          controller: yearBorn,
+          onChanged: onValueChange,
           decoration: const InputDecoration(
-            labelText: 'Enter something',
+            labelText: 'i.e. 1971',
             border: OutlineInputBorder(),
           ),
-        ),
+        )
       ],
     );
   }

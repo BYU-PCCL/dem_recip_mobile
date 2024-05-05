@@ -1,14 +1,14 @@
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
-class GenderQuestion implements Question {
+class RaceQuestion implements Question {
   @override
-  String get title => 'What gender do you identify as?';
+  String get title => 'What is your race?';
 
   @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
-      children: <String>['Male', 'Female', 'Other']
+      children: <String>['White', 'Black', 'Hispanic', 'Asian', 'Other']
           .map((String value) => RadioListTile<String>(
                 title: Text(value),
                 value: value,
@@ -19,6 +19,3 @@ class GenderQuestion implements Question {
     );
   }
 }
-
-
-    
