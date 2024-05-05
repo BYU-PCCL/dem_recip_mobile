@@ -35,4 +35,34 @@ class UserService extends Service {
       throw Exception('Error: $e');
     }
   }
+
+  static Future<void> updateUser(String? username, Map<String, dynamic> data) async {
+    String? token = await AuthService().currentUser?.getIdToken();
+    
+    String apiUrl = '${Service.baseUrl}/update_user';
+    try {
+      var headers = <String, String>{};
+      headers['Content-Type'] = 'application/json';
+      if (token != null) {
+        headers['Authorization'] = 'Bearer $token'; // Set authorization token in header
+      }
+
+      var body = <String, dynamic>{};
+      body['username'] = username; // Add username to request body
+      body['data'] = data;
+    
+      var response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode != 200) {
+        Map<String, dynamic> body = jsonDecode(response.body);
+        throw Exception('Failed to load data: ${body['message']}');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
 }

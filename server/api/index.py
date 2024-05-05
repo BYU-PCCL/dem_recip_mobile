@@ -82,3 +82,31 @@ def get_state():
         return {'data': 1}, 200
     else:
         return {'data': 2}, 200
+    
+
+@app.route('/update_user', methods=["POST"])
+@token_required
+def update_user():
+    body = request.get_json()
+
+    if 'username' not in body or 'data' not in body:
+        return {
+            "message": "Username was not included in request body",
+            "data": None,
+            "error": "No username"
+        }, 400
+    try:
+        username = body['username']
+        data = body['data']
+
+        factory = FactoryProvider.getFactory()
+        user_dao = factory.get_user_dao()
+        response = user_dao.update_user(username, data)
+
+        
+
+    except Exception as e:
+        return {
+            "message": "An unexpected error occurred on the server",
+            "error": e
+        }, 500

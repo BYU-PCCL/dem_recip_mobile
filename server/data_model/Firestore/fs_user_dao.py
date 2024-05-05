@@ -20,6 +20,7 @@ class FirebaseUserDao(UserDao):
     
     def update_user(self, username: str, data: dict[str, any]):
         doc_ref = self.db.collection("user").document(username)
+        raise Exception
 
         doc_ref.update(data)
     

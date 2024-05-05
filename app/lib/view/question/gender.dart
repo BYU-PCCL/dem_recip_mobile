@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum SingingCharacter { male, female, other }
+enum Gender { male, female, other }
 
 class GenderQuestion extends StatefulWidget {
   const GenderQuestion({super.key});
@@ -10,37 +10,37 @@ class GenderQuestion extends StatefulWidget {
 }
 
 class _GenderQuestionState extends State<GenderQuestion> {
-  SingingCharacter? _character;
+  Gender? _character;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        RadioListTile<SingingCharacter>(
+        RadioListTile<Gender>(
           title: const Text('Male'),
-          value: SingingCharacter.male,
+          value: Gender.male,
           groupValue: _character,
-          onChanged: (SingingCharacter? value) {
+          onChanged: (Gender? value) {
             setState(() {
               _character = value;
             });
           },
         ),
-        RadioListTile<SingingCharacter>(
+        RadioListTile<Gender>(
           title: const Text('Female'),
-          value: SingingCharacter.female,
+          value: Gender.female,
           groupValue: _character,
-          onChanged: (SingingCharacter? value) {
+          onChanged: (Gender? value) {
             setState(() {
               _character = value;
             });
           },
         ),
-        RadioListTile<SingingCharacter>(
+        RadioListTile<Gender>(
           title: const Text('Other'),
-          value: SingingCharacter.other,
+          value: Gender.other,
           groupValue: _character,
-          onChanged: (SingingCharacter? value) {
+          onChanged: (Gender? value) {
             setState(() {
               _character = value;
             });
