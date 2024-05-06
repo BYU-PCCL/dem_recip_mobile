@@ -1,6 +1,11 @@
 import 'package:dem_recip_mobile/service/user_service.dart';
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/navigation/home_navigator.dart';
+import 'package:dem_recip_mobile/view/question/birth_year.dart';
+import 'package:dem_recip_mobile/view/question/gender.dart';
+import 'package:dem_recip_mobile/view/question/partisanship.dart';
+import 'package:dem_recip_mobile/view/question/question.dart';
+import 'package:dem_recip_mobile/view/question/race.dart';
 import 'package:dem_recip_mobile/view/questionnaire.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +17,14 @@ class OpeningNavigator extends StatefulWidget {
 class _OpeningNavigatorState extends State<OpeningNavigator> {
 
   bool showQuestionnaire = true;
+
+  final List<Question> _questions = [
+    RaceQuestion(),
+    GenderQuestion(),
+    BirthYearQuestion(),
+    PartisanshipQuestion()
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +61,7 @@ class _OpeningNavigatorState extends State<OpeningNavigator> {
                             setState(() {
                               showQuestionnaire = false;
                             });
-                          }),
+                          }, questions: _questions),
                         ),
                       ),
                     ),

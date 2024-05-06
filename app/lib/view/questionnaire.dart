@@ -1,16 +1,13 @@
 import 'package:dem_recip_mobile/service/user_service.dart';
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
-import 'package:dem_recip_mobile/view/question/birth_year.dart';
-import 'package:dem_recip_mobile/view/question/gender.dart';
-import 'package:dem_recip_mobile/view/question/partisanship.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
-import 'package:dem_recip_mobile/view/question/race.dart';
 import 'package:flutter/material.dart';
 
 class Questionnaire extends StatefulWidget {
   final Function() onComplete;
+  final List<Question> questions;
 
-  const Questionnaire({super.key, required this.onComplete});
+  const Questionnaire({super.key, required this.onComplete, required this.questions});
 
   @override
   _QuestionnaireState createState() => _QuestionnaireState();
@@ -27,27 +24,20 @@ class _QuestionnaireState extends State<Questionnaire> {
     });
   }
 
-  final List<Question> _questions = [
-    RaceQuestion(),
-    GenderQuestion(),
-    BirthYearQuestion(),
-    PartisanshipQuestion()
-  ];
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(_questions[_currentQuestionIndex].title),
+      title: Text(widget.questions[_currentQuestionIndex].title),
       contentPadding: const EdgeInsets.all(30),
       content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              _questions[_currentQuestionIndex].widget(
+              widget.questions[_currentQuestionIndex].widget(
                 context,
                 _value,
                 (newValue) {
                   _value = newValue!;
-                  _setAnswer(_questions[_currentQuestionIndex].key, newValue);
+                  _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
                 },
               ),
             ],
@@ -60,7 +50,7 @@ class _QuestionnaireState extends State<Questionnaire> {
         ),
         ElevatedButton(
           onPressed: _navigateNext,
-          child: Text(_currentQuestionIndex == _questions.length - 1 ? 'Submit' : 'Next'),
+          child: Text(_currentQuestionIndex == widget.questions.length - 1 ? 'Submit' : 'Next'),
         ),
       ],
     );
@@ -73,7 +63,7 @@ class _QuestionnaireState extends State<Questionnaire> {
   }
 
   Future<void> _navigateNext() async {
-    if (_currentQuestionIndex == _questions.length - 1) {
+    if (_currentQuestionIndex == widget.questions.length - 1) {
       try {
 
         await UserService.updateUser(AuthService().currentUser?.email, _data);

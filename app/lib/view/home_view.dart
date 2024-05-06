@@ -17,7 +17,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
 
   List<ConversationMetaData> _conversations = [];
-  bool _isLoading = true;
   
   @override
   void initState() {
@@ -30,12 +29,8 @@ class _HomeViewState extends State<HomeView> {
       List<ConversationMetaData> loadedConversations = await UserService.getConversations(AuthService().currentUser?.email);
       setState(() {
         _conversations = loadedConversations;
-        _isLoading = false;
       });
     } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
       print('Failed to fetch conversations: $e');
     }
   }
