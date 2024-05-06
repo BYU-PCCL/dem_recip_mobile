@@ -1,8 +1,11 @@
 
+import 'package:dem_recip_mobile/utils/conversation_metadata.dart';
 import 'package:flutter/material.dart';
 
 class ConversationBox extends StatelessWidget {
-  const ConversationBox({super.key});
+  final ConversationMetaData data;
+
+  const ConversationBox({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +25,9 @@ class ConversationBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'Title of the Box',
-              style: TextStyle(
+            Text(
+              '${data.topic}-${data.partner}',
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -32,7 +35,7 @@ class ConversationBox extends StatelessWidget {
             ),
             const SizedBox(height: 8),  // Space between title and subtitle
             Text(
-              'This is a little description to go along with the title. It gives more information about the content of the box.',
+              data.timeStamp,
               style: TextStyle(
                 color: Colors.black.withOpacity(0.6),
                 fontSize: 16,
