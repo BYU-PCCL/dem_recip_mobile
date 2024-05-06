@@ -90,7 +90,7 @@ class UserService extends Service {
       throw Exception('Failed to load data: ${body['message']}');
     }else {
       Map<String, dynamic> data = json.decode(response.body);
-      List<Map<String, dynamic>> convos = data['data'];
+      List<dynamic> convos = data['data'];
 
       List<ConversationMetaData> conversations = [];
 
