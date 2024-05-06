@@ -2,7 +2,6 @@ from ..dto.user import User
 from ..dao_factory.userdao import UserDao
 from .db import Firebase
 
-import bcrypt
 from typing import Union
 
 class FirebaseUserDao(UserDao):
@@ -15,7 +14,16 @@ class FirebaseUserDao(UserDao):
         data = doc_ref.get()
 
         if data and data.exists:
-            return User(data.to_dict())
+            formatted_data = data.to_dict()
+            return User(
+                gender=formatted_data.get('gender'),
+                race=formatted_data.get('race'),
+                partisanship=formatted_data.get('partisanship'),
+                yearBorn=formatted_data.get('yearBorn'),
+                conversations=formatted_data.get('conversations'),
+                isBot=formatted_data.get('isBot'),
+                interceptId=formatted_data.get('interceptId')
+            )
         return None
     
     def update_user(self, username: str, data: dict[str, any]):
