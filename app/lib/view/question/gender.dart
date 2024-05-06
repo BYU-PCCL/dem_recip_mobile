@@ -6,6 +6,9 @@ class GenderQuestion implements Question {
   String get title => 'What gender do you identify as?';
 
   @override
+  String get key => 'gender';
+
+  @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
       children: <String>['Male', 'Female', 'Other']

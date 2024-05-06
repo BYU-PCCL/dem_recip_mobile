@@ -1,7 +1,10 @@
+import 'package:dem_recip_mobile/service/user_service.dart';
+import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/question/birth_year.dart';
 import 'package:dem_recip_mobile/view/question/gender.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:dem_recip_mobile/view/question/race.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Questionnaire extends StatefulWidget {
@@ -41,7 +44,7 @@ class _QuestionnaireState extends State<Questionnaire> {
                 _value,
                 (newValue) {
                   _value = newValue!;
-                  _setAnswer(_questions[_currentQuestionIndex].title, newValue);
+                  _setAnswer(_questions[_currentQuestionIndex].key, newValue);
                 },
               ),
             ],
@@ -66,14 +69,35 @@ class _QuestionnaireState extends State<Questionnaire> {
     });
   }
 
-  void _navigateNext() {
-    setState(() {
-      // _data[_questions[_currentQuestionIndex].key] = 
-      if (_currentQuestionIndex < _questions.length - 1) {
-        _currentQuestionIndex++;
-      } else {
-        // Logic for submitting the questionnaire
+  Future<void> _navigateNext() async {
+    if (_currentQuestionIndex == _questions.length - 1) {
+      try {
+
+        await UserService.updateUser(AuthService().currentUser?.email, _data);
+        
+      } catch (e) {
+        _showErrorDialog(e.toString());
       }
-    });
+    } else {
+      setState(() {
+        _currentQuestionIndex++;
+      });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
   }
 }

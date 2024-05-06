@@ -6,6 +6,9 @@ class BirthYearQuestion implements Question {
   String get title => 'What year were you born in?';
 
   @override
+  String get key => 'yearBorn';
+
+  @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
       children: [

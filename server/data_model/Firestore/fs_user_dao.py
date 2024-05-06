@@ -12,17 +12,18 @@ class FirebaseUserDao(UserDao):
     def get_user(self, username: str) -> Union[User, None]:
         doc_ref = self.db.collection("user").document(username)
 
-        data = doc_ref.get().to_dict()
+        data = doc_ref.get()
 
         if data and data.exists:
-            return User(data)
+            return User(data.to_dict())
         return None
     
     def update_user(self, username: str, data: dict[str, any]):
         doc_ref = self.db.collection("user").document(username)
-        raise Exception
-
-        doc_ref.update(data)
+        if doc_ref.get().exists:
+            doc_ref.update(data)
+        else:
+            doc_ref.create(data)
     
     def get_conversations(self, username):
         return super().get_conversations(username)

@@ -6,6 +6,9 @@ class RaceQuestion implements Question {
   String get title => 'What is your race?';
 
   @override
+  String get key => 'race';
+
+  @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
       children: <String>['White', 'Black', 'Hispanic', 'Asian', 'Other']

@@ -101,9 +101,11 @@ def update_user():
 
         factory = FactoryProvider.getFactory()
         user_dao = factory.get_user_dao()
-        response = user_dao.update_user(username, data)
+        user_dao.update_user(username, data)
 
-        
+        return {
+            'data': None
+        }, 200
 
     except Exception as e:
         return {
