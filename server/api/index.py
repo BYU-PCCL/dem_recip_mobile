@@ -27,8 +27,9 @@ def token_required(f):
             }, 401
         try:
             factory = FactoryProvider.getFactory()
-            user_dao = factory.get_userdao()
-            valid, message = user_dao.validate_username_password(token)
+            userdao = factory.get_userdao()
+            user_service = UserService(userdao)
+            valid, message = user_service.validate(token)
             if not valid:
                 return {
                 "message": message,
@@ -74,8 +75,10 @@ def get_state():
     username = body['username']
 
     factory = FactoryProvider.getFactory()
-    user_dao = factory.get_userdao()
-    user = user_dao.get_user(username)
+    userdao = factory.get_userdao()
+
+    user_service = UserService(userdao)
+    user = user_service.get_user(username)
 
     if not user:
         return {'data': 1}, 200
@@ -99,8 +102,10 @@ def update_user():
         data = body['data']
 
         factory = FactoryProvider.getFactory()
-        user_dao = factory.get_userdao()
-        user_dao.update_user(username, data)
+        userdao = factory.get_userdao()
+
+        user_service = UserService(userdao)
+        user_service.update_user(username, data)
 
         return {
             'data': None
@@ -130,7 +135,9 @@ def get_conversations():
         factory = FactoryProvider.getFactory()
         userdao = factory.get_userdao()
         convodao = factory.get_convodao()
-        convos = userdao.get_conversations(username, convodao)
+
+        user_service = UserService(userdao)
+        convos = user_service.get_conversations(username, convodao)
 
         return {
             'data': convos
