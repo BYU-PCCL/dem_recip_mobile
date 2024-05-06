@@ -1,9 +1,9 @@
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
-class PartisanshipQuestion implements Question {
+class PartisanshipQuestion extends Question {
   @override
-  String get title => 'What is your partisanship?';
+  String getTitle(Map<String, dynamic> data) => 'What is your partisanship?';
 
   @override
   String get key => 'partisanship';

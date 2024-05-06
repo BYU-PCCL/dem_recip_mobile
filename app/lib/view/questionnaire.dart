@@ -27,7 +27,7 @@ class _QuestionnaireState extends State<Questionnaire> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.questions[_currentQuestionIndex].title),
+      title: Text(widget.questions[_currentQuestionIndex].getTitle(_data)),
       contentPadding: const EdgeInsets.all(30),
       content: SingleChildScrollView(
           child: ListBody(
@@ -37,7 +37,9 @@ class _QuestionnaireState extends State<Questionnaire> {
                 _value,
                 (newValue) {
                   _value = newValue!;
-                  _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
+                  if (!widget.questions[_currentQuestionIndex].ignore){
+                    _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
+                  }
                 },
               ),
             ],
