@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dem_recip_mobile/utils/show_questionnaire.dart';
+import 'package:dem_recip_mobile/view/question/gender.dart';
+import 'package:dem_recip_mobile/view/question/question.dart';
+import 'package:dem_recip_mobile/view/question/race.dart';
+import 'package:dem_recip_mobile/view/questionnaire.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -23,15 +28,25 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  bool showQuestionnaire = true;
+
   List<types.Message> _messages = [];
   final _user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
   );
 
+  final List<Question> _questions = [
+    RaceQuestion(),
+    GenderQuestion(),
+  ];
+
   @override
   void initState() {
     super.initState();
-    _loadMessages();
+    // _loadMessages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showQuestionnaireDialog(context, showQuestionnaire, setState, _questions);
+    });
   }
 
   void _addMessage(types.Message message) {
@@ -212,23 +227,30 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          showUserAvatars: true,
-          showUserNames: true,
-          user: _user,
-          theme: const DefaultChatTheme(
-            seenIcon: Text(
-              'read',
-              style: TextStyle(
-                fontSize: 10.0,
-              ),
-            ),
+      appBar: AppBar(
+          title: Text('New Screen'),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-      );
+      body: Chat(
+      messages: _messages,
+      onAttachmentPressed: _handleAttachmentPressed,
+      onMessageTap: _handleMessageTap,
+      onPreviewDataFetched: _handlePreviewDataFetched,
+      onSendPressed: _handleSendPressed,
+      showUserAvatars: true,
+      showUserNames: true,
+      user: _user,
+      theme: const DefaultChatTheme(
+        seenIcon: Text(
+          'read',
+          style: TextStyle(
+            fontSize: 10.0,
+          ),
+        ),
+      ),
+    ),
+  );
 }
