@@ -4,11 +4,12 @@ import 'package:dem_recip_mobile/view/question/birth_year.dart';
 import 'package:dem_recip_mobile/view/question/gender.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:dem_recip_mobile/view/question/race.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Questionnaire extends StatefulWidget {
-  const Questionnaire({super.key});
+  final Function() onComplete;
+
+  const Questionnaire({super.key, required this.onComplete});
 
   @override
   _QuestionnaireState createState() => _QuestionnaireState();
@@ -74,6 +75,8 @@ class _QuestionnaireState extends State<Questionnaire> {
       try {
 
         await UserService.updateUser(AuthService().currentUser?.email, _data);
+
+        widget.onComplete();
         
       } catch (e) {
         _showErrorDialog(e.toString());
