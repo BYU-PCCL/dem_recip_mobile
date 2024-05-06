@@ -1,4 +1,4 @@
-import 'package:dem_recip_mobile/view/widget_tree.dart';
+import 'package:dem_recip_mobile/view/navigation/auth_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blueGrey[700]
       ),
-      home: const WidgetTree(),
+      home: const AuthNavigator(),
     );
   }
 }

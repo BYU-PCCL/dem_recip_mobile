@@ -1,23 +1,23 @@
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/login_register_view.dart';
-import 'package:dem_recip_mobile/view/main_navigation.dart';
+import 'package:dem_recip_mobile/view/navigation/opening_navigator.dart';
 import 'package:flutter/material.dart';
 
-class WidgetTree extends StatefulWidget {
-  const WidgetTree({super.key});
+class AuthNavigator extends StatefulWidget {
+  const AuthNavigator({super.key});
 
   @override
-  State<WidgetTree> createState() => _WidgetTreeState();
+  State<AuthNavigator> createState() => _AuthNavigatorState();
 }
 
-class _WidgetTreeState extends State<WidgetTree> {
+class _AuthNavigatorState extends State<AuthNavigator> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: AuthService().authStateChanges, 
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return MainNavigator();
+          return OpeningNavigator();
         } else {
           return const LoginView();
         }

@@ -1,15 +1,15 @@
 import 'package:dem_recip_mobile/service/user_service.dart';
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
-import 'package:dem_recip_mobile/view/home_navigator.dart';
+import 'package:dem_recip_mobile/view/navigation/home_navigator.dart';
 import 'package:dem_recip_mobile/view/questionnaire.dart';
 import 'package:flutter/material.dart';
 
-class MainNavigator extends StatefulWidget {
+class OpeningNavigator extends StatefulWidget {
   @override
-  _MainNavigatorState createState() => _MainNavigatorState();
+  _OpeningNavigatorState createState() => _OpeningNavigatorState();
 }
 
-class _MainNavigatorState extends State<MainNavigator> {
+class _OpeningNavigatorState extends State<OpeningNavigator> {
 
   bool showQuestionnaire = true;
 
