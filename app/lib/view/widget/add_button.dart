@@ -1,3 +1,4 @@
+import 'package:dem_recip_mobile/view/chat_room_view.dart';
 import 'package:flutter/material.dart';
 
 
@@ -15,8 +16,10 @@ class AddButton extends StatelessWidget {
               padding: const EdgeInsets.all(16.0), // Adding some padding around the button
               child: FloatingActionButton(
                 onPressed: () {
-                  // Action when button is pressed
-                  print('Plus button pressed');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ChatPage()),
+                  );
                 },
                 child: const Icon(Icons.add), // Plus icon
               ),
