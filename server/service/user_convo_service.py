@@ -15,7 +15,7 @@ class UserConvoService:
           user_convo = UserConvo(
                data['username'],
                data['convoId'],
-               UserConvoState(int(data['state'])),
+               UserConvoState.IN_CONVO,
                data['stance'],
                data['treatment']
           )

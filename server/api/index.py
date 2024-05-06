@@ -3,6 +3,8 @@ from data_model.dto.user import User
 from state.states import UserState
 from data_model.dao_factory.factory import FactoryProvider
 from service.user_service import UserService
+from service.user_convo_service import UserConvoService
+from service.convo_service import ConvoService
 import os
 from functools import wraps
 
@@ -155,25 +157,24 @@ def get_conversations():
 def create_user_convo():
     body = request.get_json()
 
-    if 'username' not in body or 'convo_id' not in body:
-        return {
-            "message": "username or convo id was not included in the body",
-            "data": None,
-            "error": "Missing username or convo_id"
-        }, 400
+    for field in {'username', 'convoId', 'stance', 'treatment'}:
+        if field not in body:
+            return {
+                "message": f"{field} included in the body",
+                "data": None,
+                "error": f"Missing field: {field}"
+            }, 400
     try:
-        username = body['username']
-        convo_id = body['convo_id']
 
         factory = FactoryProvider.getFactory()
-        userdao = factory.get_userdao()
-        convodao = factory.get_convodao()
+        user_convodao = factory.get_user_convodao()
 
-        user_service = UserService(userdao)
-        convos = user_service.get_conversations(username, convodao)
+        user_convo_service = UserConvoService(user_convodao)
+        user_convo_service.create(body)
+
 
         return {
-            'data': convos
+            'data': None
         }, 200
 
     except Exception as e:
@@ -181,3 +182,36 @@ def create_user_convo():
             "message": "An unexpected error occurred on the server",
             "error": e
         }, 500
+    
+
+@app.route('/convo/create', methods=["POST"])
+@token_required
+def create_user_convo():
+    body = request.get_json()
+
+    for field in {'convoId', 'topic'}:
+        if field not in body:
+            return {
+                "message": f"{field} included in the body",
+                "data": None,
+                "error": f"Missing field: {field}"
+            }, 400
+    
+    try:
+
+        factory = FactoryProvider.getFactory()
+        convodao = factory.get_convodao()
+
+        convo_service = ConvoService(convodao)
+        convo_service.create(body)
+
+        return {
+            'data': None
+        }, 200
+
+    except Exception as e:
+        return {
+            "message": "An unexpected error occurred on the server",
+            "error": e
+        }, 500
+    
