@@ -1,5 +1,7 @@
+from data_model.dto.conversation import Conversation
 from ..dto.user import User
 from ..dao_factory.userdao import UserDao
+from ..dao_factory.convodao import ConvoDao
 from .db import Firebase
 
 from typing import Union
@@ -33,8 +35,16 @@ class FirebaseUserDao(UserDao):
         else:
             doc_ref.create(data)
     
-    def get_conversations(self, username):
-        return super().get_conversations(username)
+    def get_conversations(self, username: str, convodao: ConvoDao) -> list[Conversation]:
+        doc_ref = self.db.collection("user").document(username)
+        data = doc_ref.get()
+        if data and data.exists:
+            formatted_data = data.to_dict()
+            conversation_ids: list[str] = formatted_data.get('conversations', [])
+            convos = [convodao.get_convo(convo_id) for convo_id in conversation_ids]
+            return convos
+        else:
+            raise Exception("Could not find user in database")
     
     def delete_conversation(self, username, convo_id):
         return super().delete_conversation(username, convo_id)

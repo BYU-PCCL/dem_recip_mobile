@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Union
 from ..dto.user import User
+from ..dto.conversation import Conversation
+from .convodao import ConvoDao
 
 class UserDao(ABC):
 
@@ -13,11 +15,11 @@ class UserDao(ABC):
         pass
 
     @abstractmethod
-    def get_conversations(self, username):
+    def get_conversations(self, username: str, convodao: ConvoDao) -> list[Conversation]:
         pass
 
     @abstractmethod
-    def delete_conversation(self, username, convo_id):
+    def delete_conversation(self, username: str, convo_id: str):
         pass
 
     @abstractmethod

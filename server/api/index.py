@@ -5,7 +5,6 @@ from data_model.dao_factory.factory import FactoryProvider
 from service.user_service import UserService
 import os
 from functools import wraps
-import jwt
 
 from dotenv import load_dotenv
 
@@ -28,7 +27,7 @@ def token_required(f):
             }, 401
         try:
             factory = FactoryProvider.getFactory()
-            user_dao = factory.get_user_dao()
+            user_dao = factory.get_userdao()
             valid, message = user_dao.validate_username_password(token)
             if not valid:
                 return {
@@ -75,7 +74,7 @@ def get_state():
     username = body['username']
 
     factory = FactoryProvider.getFactory()
-    user_dao = factory.get_user_dao()
+    user_dao = factory.get_userdao()
     user = user_dao.get_user(username)
 
     if not user:
@@ -100,11 +99,41 @@ def update_user():
         data = body['data']
 
         factory = FactoryProvider.getFactory()
-        user_dao = factory.get_user_dao()
+        user_dao = factory.get_userdao()
         user_dao.update_user(username, data)
 
         return {
             'data': None
+        }, 200
+
+    except Exception as e:
+        return {
+            "message": "An unexpected error occurred on the server",
+            "error": e
+        }, 500
+    
+
+@app.route('/get_conversations', methods=["POST"])
+@token_required
+def get_conversations():
+    body = request.get_json()
+
+    if 'username' not in body:
+        return {
+            "message": "username was not included in body",
+            "data": None,
+            "error": "Missing username"
+        }, 400
+    try:
+        username = body['username']
+
+        factory = FactoryProvider.getFactory()
+        userdao = factory.get_userdao()
+        convodao = factory.get_convodao()
+        convos = userdao.get_conversations(username, convodao)
+
+        return {
+            'data': convos
         }, 200
 
     except Exception as e:
