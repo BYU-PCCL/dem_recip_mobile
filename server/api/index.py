@@ -60,7 +60,7 @@ def edit_profile():
     data = body['data']
 
 
-@app.route('/get_state', methods=["POST"])
+@app.route('/user/get_state', methods=["POST"])
 @token_required
 def get_state():
     body = request.get_json()
@@ -86,7 +86,7 @@ def get_state():
         return {'data': 2}, 200
     
 
-@app.route('/update_user', methods=["POST"])
+@app.route('/user/update_user', methods=["POST"])
 @token_required
 def update_user():
     body = request.get_json()
@@ -118,7 +118,7 @@ def update_user():
         }, 500
     
 
-@app.route('/get_conversations', methods=["POST"])
+@app.route('/user/get_conversations', methods=["POST"])
 @token_required
 def get_conversations():
     body = request.get_json()
@@ -131,6 +131,39 @@ def get_conversations():
         }, 400
     try:
         username = body['username']
+
+        factory = FactoryProvider.getFactory()
+        userdao = factory.get_userdao()
+        convodao = factory.get_convodao()
+
+        user_service = UserService(userdao)
+        convos = user_service.get_conversations(username, convodao)
+
+        return {
+            'data': convos
+        }, 200
+
+    except Exception as e:
+        return {
+            "message": "An unexpected error occurred on the server",
+            "error": e
+        }, 500
+    
+
+@app.route('/user_convo/create', methods=["POST"])
+@token_required
+def create_user_convo():
+    body = request.get_json()
+
+    if 'username' not in body or 'convo_id' not in body:
+        return {
+            "message": "username or convo id was not included in the body",
+            "data": None,
+            "error": "Missing username or convo_id"
+        }, 400
+    try:
+        username = body['username']
+        convo_id = body['convo_id']
 
         factory = FactoryProvider.getFactory()
         userdao = factory.get_userdao()

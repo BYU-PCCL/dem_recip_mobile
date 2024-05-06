@@ -9,7 +9,7 @@ class UserService extends Service {
 
     String? token = await AuthService().currentUser?.getIdToken();
     
-    String apiUrl = '${Service.baseUrl}/get_state';
+    String apiUrl = '${Service.baseUrl}/user/get_state';
     try {
       var headers = <String, String>{};
       headers['Content-Type'] = 'application/json';
@@ -40,7 +40,7 @@ class UserService extends Service {
   static Future<void> updateUser(String? username, Map<String, dynamic> data) async {
     String? token = await AuthService().currentUser?.getIdToken();
     
-    String apiUrl = '${Service.baseUrl}/update_user';
+    String apiUrl = '${Service.baseUrl}/user/update_user';
     var headers = <String, String>{};
     headers['Content-Type'] = 'application/json';
     if (token != null) {
@@ -69,7 +69,7 @@ class UserService extends Service {
 
     String? token = await AuthService().currentUser?.getIdToken();
     
-    String apiUrl = '${Service.baseUrl}/get_conversations';
+    String apiUrl = '${Service.baseUrl}/user/get_conversations';
     var headers = <String, String>{};
     headers['Content-Type'] = 'application/json';
     if (token != null) {

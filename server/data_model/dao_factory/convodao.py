@@ -25,3 +25,7 @@ class ConvoDao(ABC):
     @abstractmethod
     def get_topic(self, convo_id: str) -> str:
         pass
+    
+    @abstractmethod
+    def create_convo(self, convo: Conversation):
+        pass
