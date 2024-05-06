@@ -2,6 +2,7 @@ import 'package:dem_recip_mobile/service/user_service.dart';
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/question/birth_year.dart';
 import 'package:dem_recip_mobile/view/question/gender.dart';
+import 'package:dem_recip_mobile/view/question/partisanship.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:dem_recip_mobile/view/question/race.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ class _QuestionnaireState extends State<Questionnaire> {
   final List<Question> _questions = [
     RaceQuestion(),
     GenderQuestion(),
-    BirthYearQuestion()
+    BirthYearQuestion(),
+    PartisanshipQuestion()
   ];
 
   @override
