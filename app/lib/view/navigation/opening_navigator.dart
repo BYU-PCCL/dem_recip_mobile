@@ -57,7 +57,8 @@ class _OpeningNavigatorState extends State<OpeningNavigator> {
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Questionnaire(onComplete: () {
+                          child: Questionnaire(onComplete: (Map<String, dynamic> data) async {
+                            await UserService.updateUser(AuthService().currentUser?.email, data);
                             setState(() {
                               showQuestionnaire = false;
                             });

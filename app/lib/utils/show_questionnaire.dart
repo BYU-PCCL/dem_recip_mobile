@@ -35,10 +35,10 @@ void showQuestionnaireDialog(
               ),
             ),
             Questionnaire(
-              onComplete: () {
-                Navigator.of(dialogContext).pop();  // Close the dialog
+              onComplete: (Map<String, dynamic> data) async {
+                Navigator.of(dialogContext).pop();
                 setState(() {
-                  showQuestionnaire = false; // Adjust the state as needed
+                  showQuestionnaire = false;
                 });
               },
               questions: questions,

@@ -1,20 +1,20 @@
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
-class TreatmentQuestion extends Question {
+class PartnerTypeQuestion extends Question {
   @override
-  String getTitle(Map<String, dynamic> data) => 'Would you like to receive the treatment?';
+  String getTitle(Map<String, dynamic> data) => 'What type of partner would you like to be paired with?';
 
   @override
-  String get key => 'treatment';
+  String get key => 'partner_type';
 
   @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
     return Column(
-      children: <String>['Yes', 'No']
-          .map((value) => RadioListTile<String>(
+      children: <String>['Bot', 'Human']
+          .map((String value) => RadioListTile<String>(
                 title: Text(value),
-                value: value == "Yes" ? 'true' : 'false',
+                value: value.toLowerCase(),
                 groupValue: currentValue,
                 onChanged: onValueChange,
               ))
@@ -22,3 +22,6 @@ class TreatmentQuestion extends Question {
     );
   }
 }
+
+
+    

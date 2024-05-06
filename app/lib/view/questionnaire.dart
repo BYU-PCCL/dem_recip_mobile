@@ -4,7 +4,7 @@ import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
 class Questionnaire extends StatefulWidget {
-  final Function() onComplete;
+  final Function(Map<String, dynamic> data) onComplete;
   final List<Question> questions;
 
   const Questionnaire({super.key, required this.onComplete, required this.questions});
@@ -68,9 +68,7 @@ class _QuestionnaireState extends State<Questionnaire> {
     if (_currentQuestionIndex == widget.questions.length - 1) {
       try {
 
-        await UserService.updateUser(AuthService().currentUser?.email, _data);
-
-        widget.onComplete();
+        await widget.onComplete(_data);
         
       } catch (e) {
         _showErrorDialog(e.toString());
