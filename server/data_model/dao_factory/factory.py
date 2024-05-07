@@ -34,4 +34,4 @@ class FirestoreFactory(DaoFactory):
         return FirebaseConvoDao()
     
     def get_user_convodao(self) -> UserConvoDao:
-        return UserConvoDao()
+        return FirebaseUserConvoDao()

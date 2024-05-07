@@ -27,6 +27,8 @@ class UserService:
 
         user = self.userdao.get_user(username)
 
-        new_arr = user.conversations + [convo_id]
+        convos = user.conversations if user.conversations else []
 
-        self.userdao.update_user(username, {'conversations', new_arr})
+        new_arr = convos + [convo_id]
+
+        self.userdao.update_user(username, {'conversations': new_arr})

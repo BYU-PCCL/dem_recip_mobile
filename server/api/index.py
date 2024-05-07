@@ -157,7 +157,7 @@ def get_conversations():
 def create_user_convo():
     body = request.get_json()
 
-    for field in {'username', 'stance', 'treatment', 'topic'}:
+    for field in {'username', 'stance', 'treatment', 'topic', 'partner_type'}:
         if field not in body:
             return {
                 "message": f"{field} included in the body",

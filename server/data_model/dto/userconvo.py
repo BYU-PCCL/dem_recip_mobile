@@ -18,7 +18,7 @@ class UserConvo:
 
      def to_dict(self):
           return {
-               'state': self.state,
+               'state': self.state.value,
                'stance': self.stance,
                'treatment': self.treatment
           }
