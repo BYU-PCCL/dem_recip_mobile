@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dem_recip_mobile/service/user_convo_service.dart';
 import 'package:dem_recip_mobile/utils/show_questionnaire.dart';
-import 'package:dem_recip_mobile/view/question/gender.dart';
+import 'package:dem_recip_mobile/view/question/consent.dart';
+import 'package:dem_recip_mobile/view/question/partisanship.dart';
+import 'package:dem_recip_mobile/view/question/partner_type.dart';
+import 'package:dem_recip_mobile/view/question/position.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
-import 'package:dem_recip_mobile/view/question/race.dart';
-import 'package:dem_recip_mobile/view/questionnaire.dart';
+import 'package:dem_recip_mobile/view/question/topic.dart';
+import 'package:dem_recip_mobile/view/question/treatment.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -36,8 +40,12 @@ class _ChatPageState extends State<ChatPage> {
   );
 
   final List<Question> _questions = [
-    RaceQuestion(),
-    GenderQuestion(),
+    ConsentQuestion(),
+    TopicQuestion(),
+    PositionQuestion(),
+    PartisanshipQuestion(),
+    TreatmentQuestion(),
+    PartnerTypeQuestion()
   ];
 
   @override
@@ -45,7 +53,7 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     // _loadMessages();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showQuestionnaireDialog(context, showQuestionnaire, setState, _questions);
+      showQuestionnaireDialog(context, showQuestionnaire, setState, _questions, UserConvoService.create);
     });
   }
 

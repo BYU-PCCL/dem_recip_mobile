@@ -24,39 +24,51 @@ class _QuestionnaireState extends State<Questionnaire> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(widget.questions[_currentQuestionIndex].getTitle(_data)),
-      contentPadding: const EdgeInsets.all(30),
-      content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              widget.questions[_currentQuestionIndex].widget(
-                context,
-                _value,
-                (newValue) {
-                  _value = newValue!;
-                  if (!widget.questions[_currentQuestionIndex].ignore){
-                    _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
-                  }
-                },
-              ),
-            ],
+@override
+Widget build(BuildContext context) {
+  return AlertDialog(
+    titlePadding: const EdgeInsets.only(top: 20, bottom: 0, left: 10, right: 10),
+    title: Align(
+      alignment: Alignment.centerLeft,
+      child: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.of(context).pop();
+        }
+      ),
+    ),
+    contentPadding: const EdgeInsets.only(top: 0, bottom: 16, left: 16, right: 16),
+    content: SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Text(widget.questions[_currentQuestionIndex].getTitle(_data), style: Theme.of(context).textTheme.headline6),
+          const SizedBox(height: 20),
+          widget.questions[_currentQuestionIndex].widget(
+            context,
+            _value,
+            (newValue) {
+              _value = newValue!;
+              if (!widget.questions[_currentQuestionIndex].ignore) {
+                _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
+              }
+            },
           ),
-        ),
-      actions: [
-        ElevatedButton(
-          onPressed: _currentQuestionIndex > 0 ? _navigatePrevious : null,
-          child: const Text("Previous"),
-        ),
-        ElevatedButton(
-          onPressed: _navigateNext,
-          child: Text(_currentQuestionIndex == widget.questions.length - 1 ? 'Submit' : 'Next'),
-        ),
-      ],
-    );
-  }
+        ],
+      ),
+    ),
+    actions: [
+      ElevatedButton(
+        onPressed: _currentQuestionIndex > 0 ? _navigatePrevious : null,
+        child: const Text("Previous"),
+      ),
+      ElevatedButton(
+        onPressed: _navigateNext,
+        child: Text(_currentQuestionIndex == widget.questions.length - 1 ? 'Submit' : 'Next'),
+      ),
+    ],
+  );
+}
 
   void _navigatePrevious() {
     setState(() {
