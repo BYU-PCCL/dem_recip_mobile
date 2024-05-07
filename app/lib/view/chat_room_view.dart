@@ -1,14 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dem_recip_mobile/service/user_convo_service.dart';
-import 'package:dem_recip_mobile/utils/show_questionnaire.dart';
-import 'package:dem_recip_mobile/view/question/consent.dart';
-import 'package:dem_recip_mobile/view/question/partner_type.dart';
-import 'package:dem_recip_mobile/view/question/position.dart';
-import 'package:dem_recip_mobile/view/question/question.dart';
-import 'package:dem_recip_mobile/view/question/topic.dart';
-import 'package:dem_recip_mobile/view/question/treatment.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -31,35 +23,18 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  bool showQuestionnaire = true;
 
   List<types.Message> _messages = [];
   final _user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
   );
 
-  final List<Question> _questions = [
-    ConsentQuestion(),
-    TopicQuestion(),
-    PositionQuestion(),
-    TreatmentQuestion(),
-    PartnerTypeQuestion()
-  ];
+
 
   @override
   void initState() {
     super.initState();
     // _loadMessages();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showQuestionnaireDialog(
-        context, 
-        showQuestionnaire, 
-        setState, 
-        _questions, 
-        UserConvoService.create,
-        2
-      );
-    });
   }
 
   void _addMessage(types.Message message) {
