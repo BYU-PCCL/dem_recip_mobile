@@ -38,6 +38,7 @@ class FirebaseConvoDao(ConvoDao):
           return super().get_topic(convo_id)
      
      def create_convo(self, convo: Conversation):
-          doc_ref = self.db.collection("conversation").document(convo)
+          
+          doc_ref = self.db.collection("conversation").document(convo.convoId)
 
           doc_ref.create(convo.to_dict())

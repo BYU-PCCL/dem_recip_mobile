@@ -157,7 +157,7 @@ def get_conversations():
 def create_user_convo():
     body = request.get_json()
 
-    for field in {'username', 'convoId', 'stance', 'treatment'}:
+    for field in {'username', 'stance', 'treatment', 'topic'}:
         if field not in body:
             return {
                 "message": f"{field} included in the body",
@@ -168,42 +168,18 @@ def create_user_convo():
 
         factory = FactoryProvider.getFactory()
         user_convodao = factory.get_user_convodao()
-
-        user_convo_service = UserConvoService(user_convodao)
-        user_convo_service.create(body)
-
-
-        return {
-            'data': None
-        }, 200
-
-    except Exception as e:
-        return {
-            "message": "An unexpected error occurred on the server",
-            "error": e
-        }, 500
-    
-
-@app.route('/convo/create', methods=["POST"])
-@token_required
-def create_user_convo():
-    body = request.get_json()
-
-    for field in {'convoId', 'topic'}:
-        if field not in body:
-            return {
-                "message": f"{field} included in the body",
-                "data": None,
-                "error": f"Missing field: {field}"
-            }, 400
-    
-    try:
-
-        factory = FactoryProvider.getFactory()
         convodao = factory.get_convodao()
+        userdao = factory.get_userdao()
 
         convo_service = ConvoService(convodao)
-        convo_service.create(body)
+        convoId = convo_service.create(body)
+
+        user_convo_service = UserConvoService(user_convodao)
+        user_convo_service.create({**body, 'convoId': convoId})
+
+        user_service = UserService(userdao)
+        user_service.add_message(body['username'], convoId)
+
 
         return {
             'data': None
@@ -214,4 +190,3 @@ def create_user_convo():
             "message": "An unexpected error occurred on the server",
             "error": e
         }, 500
-    

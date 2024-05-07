@@ -18,3 +18,14 @@ class User:
         self.conversations = conversations
         self.isBot = isBot
         self.interceptId = interceptId
+
+    def to_dict(self):
+        return {
+            "gender": self.gender,
+            "race": self.race,
+            "partisanship": self.partisanship,
+            "yearBorn": self.yearBorn,
+            "conversations": self.conversations,
+            "isBot": self.isBot,
+            "interceptId": self.interceptId
+        }
