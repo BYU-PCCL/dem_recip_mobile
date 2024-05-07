@@ -8,16 +8,19 @@ import 'package:dem_recip_mobile/view/question/topic.dart';
 import 'package:dem_recip_mobile/view/question/treatment.dart';
 import 'package:flutter/material.dart';
 
-class AddButton extends StatefulWidget {
-  const AddButton({super.key});
+// class AddButton extends StatefulWidget {
+//   const AddButton({super.key});
 
-  @override
-  _AddButtonState createState() => _AddButtonState();
-}
+//   @override
+//   _AddButtonState createState() => _AddButtonState();
+// }
 
 
-class _AddButtonState extends State<AddButton> {
-  bool showQuestionnaire = true;
+class AddButton extends StatelessWidget {
+  final bool showQuestionnaire;
+  final Function(Function()) setState;
+
+  AddButton({super.key, required this.showQuestionnaire, required this.setState});
 
   final List<Question> _questions = [
     ConsentQuestion(),

@@ -39,10 +39,17 @@ class FirebaseUserDao(UserDao):
     def get_conversations(self, username: str, convodao: ConvoDao) -> list[Conversation]:
         doc_ref = self.db.collection("user").document(username)
         data = doc_ref.get()
+
         if data and data.exists:
             formatted_data = data.to_dict()
             conversation_ids: list[str] = formatted_data.get('conversations', [])
-            convos = [convodao.get_convo(convo_id) for convo_id in conversation_ids]
+
+            convos = []
+            for convoId in conversation_ids:
+                if 'waiting' in convoId:
+                    convos.append(Conversation(convoId=convoId, topic=convoId.split('-')[1]))
+                else:
+                    convos.append(convodao.get_convo(convoId))
             return convos
         else:
             return []

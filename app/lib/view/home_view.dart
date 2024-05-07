@@ -15,6 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  bool showQuesionnaire = false;
 
   List<ConversationMetaData> _conversations = [];
   
@@ -48,7 +49,7 @@ class _HomeViewState extends State<HomeView> {
                   _conversations.map((element) => ConversationBox(data: element)).toList()
             ),
           ),
-          const AddButton()
+          AddButton(showQuestionnaire: showQuesionnaire, setState: setState)
         ]
       )
     );
