@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:dem_recip_mobile/service/user_convo_service.dart';
 import 'package:dem_recip_mobile/utils/show_questionnaire.dart';
 import 'package:dem_recip_mobile/view/question/consent.dart';
-import 'package:dem_recip_mobile/view/question/partisanship.dart';
 import 'package:dem_recip_mobile/view/question/partner_type.dart';
 import 'package:dem_recip_mobile/view/question/position.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
@@ -43,7 +42,6 @@ class _ChatPageState extends State<ChatPage> {
     ConsentQuestion(),
     TopicQuestion(),
     PositionQuestion(),
-    PartisanshipQuestion(),
     TreatmentQuestion(),
     PartnerTypeQuestion()
   ];
@@ -53,7 +51,14 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     // _loadMessages();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      showQuestionnaireDialog(context, showQuestionnaire, setState, _questions, UserConvoService.create);
+      showQuestionnaireDialog(
+        context, 
+        showQuestionnaire, 
+        setState, 
+        _questions, 
+        UserConvoService.create,
+        2
+      );
     });
   }
 

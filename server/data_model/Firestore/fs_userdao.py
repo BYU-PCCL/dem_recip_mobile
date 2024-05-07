@@ -45,7 +45,7 @@ class FirebaseUserDao(UserDao):
             convos = [convodao.get_convo(convo_id) for convo_id in conversation_ids]
             return convos
         else:
-            raise Exception("Could not find user in database")
+            return []
     
     def delete_conversation(self, username, convo_id):
         return super().delete_conversation(username, convo_id)

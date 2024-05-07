@@ -8,11 +8,12 @@ void showQuestionnaireDialog(
   bool showQuestionnaire,
   Function(Function()) setState,
   List<Question> questions,
-  Function(String? username, Map<String, dynamic>) serviceFunc
+  Function(String? username, Map<String, dynamic> userData) serviceFunc,
+  int numberOfNavigatePops
   ) async {
   await showDialog(
     context: context,
-    barrierDismissible: false,  // Ensures the dialog must be explicitly dismissed by an action
+    barrierDismissible: false, // Ensures the dialog must be explicitly dismissed by an action
     builder: (BuildContext dialogContext) {
       return Questionnaire(
         onComplete: (Map<String, dynamic> data) async {
@@ -23,6 +24,7 @@ void showQuestionnaireDialog(
           });
         },
         questions: questions,
+        numberOfNavigatePops: numberOfNavigatePops,
       );
     }
   );

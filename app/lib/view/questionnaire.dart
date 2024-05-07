@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 class Questionnaire extends StatefulWidget {
   final Function(Map<String, dynamic> data) onComplete;
   final List<Question> questions;
+  final int numberOfNavigatePops;
 
-  const Questionnaire({super.key, required this.onComplete, required this.questions});
+  const Questionnaire({super.key, required this.onComplete, required this.questions, required this.numberOfNavigatePops});
 
   @override
   _QuestionnaireState createState() => _QuestionnaireState();
@@ -27,17 +28,18 @@ class _QuestionnaireState extends State<Questionnaire> {
 Widget build(BuildContext context) {
   return AlertDialog(
     titlePadding: const EdgeInsets.only(top: 20, bottom: 0, left: 10, right: 10),
-    title: Align(
+    title: widget.numberOfNavigatePops > 0 ? Align(
       alignment: Alignment.centerLeft,
-      child: IconButton(
+      child: widget.numberOfNavigatePops > 0 ? IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
+        onPressed: widget.numberOfNavigatePops == 0 ? null : () {
+          for (var i = 0; i < widget.numberOfNavigatePops; i++) {
+            Navigator.of(context).pop();
+          }
         }
-      ),
-    ),
-    contentPadding: const EdgeInsets.only(top: 0, bottom: 16, left: 16, right: 16),
+      ): null,
+    ) : null,
+    contentPadding: EdgeInsets.only(top: widget.numberOfNavigatePops  > 0 ? 0 : 16, bottom: 16, left: 16, right: 16),
     content: SingleChildScrollView(
       child: Column(
         children: <Widget>[

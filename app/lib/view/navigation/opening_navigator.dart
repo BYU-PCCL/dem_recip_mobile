@@ -62,7 +62,7 @@ class _OpeningNavigatorState extends State<OpeningNavigator> {
                             setState(() {
                               showQuestionnaire = false;
                             });
-                          }, questions: _questions),
+                          }, questions: _questions, numberOfNavigatePops: 0),
                         ),
                       ),
                     ),
