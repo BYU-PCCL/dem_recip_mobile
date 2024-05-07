@@ -11,7 +11,7 @@ class UserConvoService:
      def set_state(self, username: str, convo_id: str, state: UserConvoState):
           pass
 
-     def create(self, data: dict[str, str]):
+     def create(self, data: dict[str, str]) -> bool:
           user_convo = UserConvo(
                data['username'],
                data['convoId'],
@@ -19,7 +19,7 @@ class UserConvoService:
                data['stance'],
                data['treatment']
           )
-          self.user_convodao.create(user_convo)
+          return self.user_convodao.create(user_convo)
 
     
     

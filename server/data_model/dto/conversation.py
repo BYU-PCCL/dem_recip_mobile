@@ -17,6 +17,7 @@ class Conversation:
 
      def to_dict(self):
           return {
+               'convoId': self.convoId,
                'messageSemaphore': self.messageSemaphore,
                'topic': self.topic,
                'participatnts': self.participatnts,

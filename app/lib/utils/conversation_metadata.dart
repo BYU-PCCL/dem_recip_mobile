@@ -2,17 +2,15 @@
 class ConversationMetaData {
   String convoId;
   String topic;
-  String partner;
-  String timeStamp;
+  List<String>? participants;
 
-  ConversationMetaData(this.convoId, this.topic, this.partner, this.timeStamp);
+  ConversationMetaData(this.convoId, this.topic, this.participants);
 
   factory ConversationMetaData.fromJson(Map<String, dynamic> json) {
     return ConversationMetaData(
       json['convoId'] as String,
       json['topic'] as String,
-      json['partnerId'] as String,
-      json['timestamp'] as String,
+      json['participants'] as List<String>?
     );
   }
 }

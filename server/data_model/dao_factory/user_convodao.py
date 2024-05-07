@@ -18,6 +18,6 @@ class UserConvoDao(ABC):
         pass
     
     @abstractmethod
-    def create(self, data: UserConvo):
+    def create(self, data: UserConvo) -> bool:
         pass
     

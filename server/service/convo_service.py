@@ -10,7 +10,8 @@ class ConvoService:
 
           user_convo = Conversation(
                convoId=convoId,
-               topic=data['topic']
+               participatnts=[data['username'], f"{data['username']}-bot"],
+               topic=data['topic'],
           )
           
           self.convodao.create_convo(user_convo)

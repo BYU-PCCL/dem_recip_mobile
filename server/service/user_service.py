@@ -23,7 +23,7 @@ class UserService:
 
         return self.userdao.get_conversations(username, convodao)
     
-    def add_message(self, username: str, convo_id: str):
+    def add_conversation(self, username: str, convo_id: str):
 
         user = self.userdao.get_user(username)
 

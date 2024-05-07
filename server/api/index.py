@@ -142,7 +142,7 @@ def get_conversations():
         convos = user_service.get_conversations(username, convodao)
 
         return {
-            'data': convos
+            'data': [convo.to_dict() for convo in convos]
         }, 200
 
     except Exception as e:
@@ -171,14 +171,18 @@ def create_user_convo():
         convodao = factory.get_convodao()
         userdao = factory.get_userdao()
 
-        convo_service = ConvoService(convodao)
-        convoId = convo_service.create(body)
+        if body['partner_type'] == "bot":
+            convo_service = ConvoService(convodao)
+            convoId = convo_service.create(body)
+        else:
+            convoId = f"waiting-{body['topic']}"
 
         user_convo_service = UserConvoService(user_convodao)
-        user_convo_service.create({**body, 'convoId': convoId})
+        added = user_convo_service.create({**body, 'convoId': convoId})
 
-        user_service = UserService(userdao)
-        user_service.add_message(body['username'], convoId)
+        if added:
+            user_service = UserService(userdao)
+            user_service.add_conversation(body['username'], convoId)
 
 
         return {

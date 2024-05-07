@@ -26,7 +26,7 @@ class ConversationBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              '${data.topic}-${data.partner}',
+              '${data.topic}-${data.convoId}',
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -34,13 +34,13 @@ class ConversationBox extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),  // Space between title and subtitle
-            Text(
-              data.timeStamp,
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.6),
-                fontSize: 16,
-              ),
-            ),
+            // Text(
+            //   data.timeStamp,
+            //   style: TextStyle(
+            //     color: Colors.black.withOpacity(0.6),
+            //     fontSize: 16,
+            //   ),
+            // ),
           ],
         ),
       ),

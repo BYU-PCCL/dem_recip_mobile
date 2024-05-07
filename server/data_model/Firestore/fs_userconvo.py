@@ -8,11 +8,16 @@ class FirebaseUserConvoDao(UserConvoDao):
     
     db, auth = Firebase()
 
-    def create(self, data: UserConvo):
+    def create(self, data: UserConvo) -> bool:
         composite_key = data.username + data.convoId
         doc_ref = self.db.collection("userconvo").document(composite_key)
 
-        doc_ref.create(data.to_dict())
+        db_data = doc_ref.get()
+        if db_data and db_data.exists:
+            return False
+        else:
+            doc_ref.create(data.to_dict())
+            return True
     
     def get_state(self, username: str, convo_id: str) -> UserConvoState:
         return super().get_state(username, convo_id)

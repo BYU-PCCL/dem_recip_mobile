@@ -95,7 +95,7 @@ class UserService extends Service {
       List<ConversationMetaData> conversations = [];
 
       for (var convoData in convos) {
-        conversations.add(ConversationMetaData.fromJson(convoData['convoId']));
+        conversations.add(ConversationMetaData.fromJson(convoData));
       }
 
       return conversations;
