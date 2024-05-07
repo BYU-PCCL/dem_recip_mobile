@@ -12,11 +12,14 @@ class ConsentQuestion extends Question {
   bool get ignore => true;
 
   @override
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     return Column(
       children: [
         TextField(
-          onChanged: onValueChange,
+          onChanged: (text) {
+            onValueChange(text);
+            setValid(text.toLowerCase() == "i consent to participate");
+          },
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
           ),

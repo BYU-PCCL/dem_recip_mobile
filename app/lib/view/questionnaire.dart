@@ -1,5 +1,3 @@
-import 'package:dem_recip_mobile/service/user_service.dart';
-import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +14,7 @@ class Questionnaire extends StatefulWidget {
 class _QuestionnaireState extends State<Questionnaire> {
   int _currentQuestionIndex = 0;
   String _value = '';
+  bool _valid = false;
   Map<String, dynamic> _data = {};
 
   void _setAnswer(String question, String answer) {
@@ -53,6 +52,11 @@ Widget build(BuildContext context) {
                 _setAnswer(widget.questions[_currentQuestionIndex].key, newValue);
               }
             },
+            (value) {
+              setState(() {
+                _valid = value!;
+              });
+            }
           ),
         ],
       ),
@@ -63,7 +67,7 @@ Widget build(BuildContext context) {
         child: const Text("Previous"),
       ),
       ElevatedButton(
-        onPressed: _navigateNext,
+        onPressed: _valid ? _navigateNext : null,
         child: Text(_currentQuestionIndex == widget.questions.length - 1 ? 'Submit' : 'Next'),
       ),
     ],
@@ -72,14 +76,21 @@ Widget build(BuildContext context) {
 
   void _navigatePrevious() {
     setState(() {
+      _value = '';
+      _valid = false;
+    });
+    setState(() {
       _currentQuestionIndex--;
     });
   }
 
   Future<void> _navigateNext() async {
+    setState(() {
+      _valid = false;
+    });
     if (_currentQuestionIndex == widget.questions.length - 1) {
       try {
-
+        
         await widget.onComplete(_data);
         
       } catch (e) {

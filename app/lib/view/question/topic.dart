@@ -9,7 +9,7 @@ class TopicQuestion extends Question {
   String get key => 'topic';
 
   @override
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     const mapping = {'Abortion': 'abortion', "Gun Control": 'gun_control', 'Immigration': 'immigration'};
 
     return Column(
@@ -18,7 +18,10 @@ class TopicQuestion extends Question {
                 title: Text(value),
                 value: mapping[value]!,
                 groupValue: currentValue,
-                onChanged: onValueChange,
+                onChanged: (text) {
+                  onValueChange(text);
+                  setValid(text != '' || text != null);
+                },
               ))
           .toList(),
     );

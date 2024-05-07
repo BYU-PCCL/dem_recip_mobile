@@ -9,14 +9,17 @@ class PartnerTypeQuestion extends Question {
   String get key => 'partner_type';
 
   @override
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     return Column(
       children: <String>['Bot', 'Human']
           .map((String value) => RadioListTile<String>(
                 title: Text(value),
                 value: value.toLowerCase(),
                 groupValue: currentValue,
-                onChanged: onValueChange,
+                onChanged: (text) {
+                  onValueChange(text);
+                  setValid(text != '' || text != null);
+                },
               ))
           .toList(),
     );

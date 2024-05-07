@@ -9,7 +9,7 @@ class PartisanshipQuestion extends Question {
   String get key => 'partisanship';
 
   @override
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     return Column(
       children: <String>[
             "Strong Democrat",
@@ -25,7 +25,10 @@ class PartisanshipQuestion extends Question {
                 title: Text(value),
                 value: value,
                 groupValue: currentValue,
-                onChanged: onValueChange,
+                onChanged: (text) {
+                  onValueChange(text);
+                  setValid(text != '' || text != null);
+                },
               ))
           .toList(),
     );

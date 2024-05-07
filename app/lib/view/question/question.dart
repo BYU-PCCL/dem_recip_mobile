@@ -6,5 +6,5 @@ abstract class Question {
   bool get ignore {
     return false;
   }
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange);
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid);
 }

@@ -9,14 +9,17 @@ class TreatmentQuestion extends Question {
   String get key => 'treatment';
 
   @override
-  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange) {
+  Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     return Column(
       children: <String>['Yes', 'No']
           .map((value) => RadioListTile<String>(
                 title: Text(value),
                 value: value == "Yes" ? 'true' : 'false',
                 groupValue: currentValue,
-                onChanged: onValueChange,
+                onChanged: (text) {
+                  onValueChange(text);
+                  setValid(text != '' || text != null);
+                },
               ))
           .toList(),
     );
