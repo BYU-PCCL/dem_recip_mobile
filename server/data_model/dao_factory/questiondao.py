@@ -5,5 +5,5 @@ from ..dto.question import Question
 class QuestionDao(ABC):
     
      @abstractmethod
-     def create(self, question: Question):
+     def create(self, question: Question) -> str:
           pass

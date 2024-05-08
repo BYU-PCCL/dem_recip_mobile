@@ -9,14 +9,14 @@ class FirebaseInterceptDao(InterceptDao):
      db, auth = Firebase()
 
      def create(self, intercept: Intercept):
-          pk = intercept.username + intercept.convoId
+          pk = f"{intercept.username}-{intercept.convoId}"
 
           doc_ref = self.db.collection("conversation").document(pk)
 
           doc_ref.create(intercept.to_dict())
 
      def increment(self, intercept: Intercept, key: str):
-          pk = intercept.username + intercept.convoId
+          pk = f"{intercept.username}-{intercept.convoId}"
 
           doc_ref = self.db.collection("conversation").document(pk)
 

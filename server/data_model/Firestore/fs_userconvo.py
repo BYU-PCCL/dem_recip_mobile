@@ -9,8 +9,8 @@ class FirebaseUserConvoDao(UserConvoDao):
     db, auth = Firebase()
 
     def create(self, data: UserConvo) -> bool:
-        composite_key = data.username + data.convoId
-        doc_ref = self.db.collection("userconvo").document(composite_key)
+        pk = f"{data.username}-{data.convoId}"
+        doc_ref = self.db.collection("userconvo").document(pk)
 
         db_data = doc_ref.get()
         if db_data and db_data.exists:
@@ -18,6 +18,12 @@ class FirebaseUserConvoDao(UserConvoDao):
         else:
             doc_ref.create(data.to_dict())
             return True
+    
+    def update(self, data: UserConvo, data_to_update: dict[str, any]) -> bool:
+        pk = f"{data.username}-{data.convoId}"
+        doc_ref = self.db.collection("userconvo").document(pk)
+
+        doc_ref.update(data_to_update)
     
     def get_state(self, username: str, convo_id: str) -> UserConvoState:
         return super().get_state(username, convo_id)

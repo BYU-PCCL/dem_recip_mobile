@@ -5,6 +5,10 @@ from state.states import UserConvoState
 class UserConvoService:
      def __init__(self, user_convodao: UserConvoDao) -> None:
           self.user_convodao = user_convodao
+
+     def update(self, user_convo: UserConvo, data_to_update: dict[str, any]):
+          
+          self.user_convodao.update(user_convo, data_to_update)
      
      def get_state(self, username: str, convo_id: str) -> UserConvoState:
           pass
@@ -14,18 +18,25 @@ class UserConvoService:
 
      def create(self, data: dict[str, str], questiondao: QuestionDao) -> bool:
           user_convo = UserConvo(
-               data['username'],
-               data['convoId'],
-               UserConvoState.IN_CONVO,
-               data['treatment']
+               username=data['username'],
+               convoId=data['convoId'],
+               state=UserConvoState.IN_CONVO,
+               treatment= True if data['treatment'] == "true" else False
           )
 
           created = self.user_convodao.create(user_convo)
           
           if created:
+
+               questions = []
+               
                for q, q_data in data['questions'].items():
                     question1 = Question.toQuestion(data['username'], q, q_data)
-                    questiondao.create(question1)
+                    pk = questiondao.create(question1)
+                    questions.append(pk)
+               
+               if questions:
+                    self.update(user_convo, {'questions': questions})
           
           return created
           

@@ -6,11 +6,13 @@ from .db import Firebase
 class FirebaseQuesionDao(QuestionDao):
      db, auth = Firebase()
      
-     def create(self, question: Question):
+     def create(self, question: Question) -> str:
 
-          pk = question.username + question.timestamp
+          pk = f"{question.username}-{question.timestamp}"
 
           doc_ref = self.db.collection("question").document(pk)
 
           doc_ref.create(question.to_dict())
+
+          return pk
 

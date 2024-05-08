@@ -15,4 +15,8 @@ class UserConvoDao(ABC):
     @abstractmethod
     def create(self, data: UserConvo) -> bool:
         pass
+
+    @abstractmethod
+    def update(self, data: UserConvo, data_to_update: dict[str, any]) -> bool:
+        pass
     
