@@ -17,6 +17,9 @@ class PositionQuestion extends Question {
   String get key => 'stance';
 
   @override
+  bool get isAnalysisQuestion => true;
+
+  @override
   Widget widget(BuildContext context, String currentValue, Function(String?) onValueChange, Function(bool?) setValid) {
     return Column(
       children: <String>['1', '2', '3', '4', '5', '6']
