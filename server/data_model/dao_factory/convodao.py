@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from ..dto.message import Message
 from ..dto.user import User
 from ..dto.conversation import Conversation
-from typing import Optional
 
 class ConvoDao(ABC):
     
