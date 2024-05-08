@@ -6,6 +6,7 @@ from service.user_service import UserService
 from service.user_convo_service import UserConvoService
 from service.convo_service import ConvoService
 import os
+import fnmatch
 from functools import wraps
 
 from dotenv import load_dotenv
@@ -157,7 +158,7 @@ def get_conversations():
 def create_user_convo():
     body = request.get_json()
 
-    for field in {'username', 'treatment', 'topic', 'partner_type', 'question-1'}:
+    for field in {'username', 'treatment', 'topic', 'partner_type', 'questions'}:
         if field not in body:
             return {
                 "message": f"{field} included in the body",

@@ -20,10 +20,10 @@ class Question:
           }
      
      @staticmethod
-     def toQuestion(username: str, data: dict[str, str]) -> 'Question':
+     def toQuestion(username: str, desc: str, data: dict[str, str]) -> 'Question':
           return Question(
                username=username,
                timestamp=data['timestamp'],
-               desc=data['desc'],
+               desc=desc,
                answer=data['answer']
           )

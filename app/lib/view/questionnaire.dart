@@ -16,7 +16,7 @@ class _QuestionnaireState extends State<Questionnaire> {
   int _currentQuestionIndex = 0;
   String _value = '';
   bool _valid = false;
-  final Map<String, dynamic> _data = {};
+  final Map<String, dynamic> _data = {'questions': {}};
 
   void _setAnswer(Question question, String newValue) {
     String key = question.key;
@@ -31,7 +31,7 @@ class _QuestionnaireState extends State<Questionnaire> {
         DateTime now = DateTime.now();
         int millisecondsSinceEpoch = now.millisecondsSinceEpoch;
 
-        _data['question-$_currentQuestionIndex'] = {'desc': question.key, 'answer': newValue, 'timestamp': millisecondsSinceEpoch.toString()};
+        _data['questions'] = { ..._data['questions'] , question.key : {'answer': newValue, 'timestamp': millisecondsSinceEpoch.toString()}};
 
       }
     });

@@ -23,8 +23,9 @@ class UserConvoService:
           created = self.user_convodao.create(user_convo)
           
           if created:
-               question1 = Question.toQuestion(data['username'], data['question-1'])
-               questiondao.create(question1)
+               for q, q_data in data['questions'].items():
+                    question1 = Question.toQuestion(data['username'], q, q_data)
+                    questiondao.create(question1)
           
           return created
           

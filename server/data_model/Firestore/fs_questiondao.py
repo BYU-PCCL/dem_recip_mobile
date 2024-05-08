@@ -10,7 +10,7 @@ class FirebaseQuesionDao(QuestionDao):
 
           pk = question.username + question.timestamp
 
-          doc_ref = self.db.collection("conversation").document(pk)
+          doc_ref = self.db.collection("question").document(pk)
 
           doc_ref.create(question.to_dict())
 
