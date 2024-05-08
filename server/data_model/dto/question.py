@@ -18,3 +18,12 @@ class Question:
                "desc": self.desc,
                "answer": self.answer
           }
+     
+     @staticmethod
+     def toQuestion(username: str, data: dict[str, str]) -> 'Question':
+          return Question(
+               username=username,
+               timestamp=data['timestamp'],
+               desc=data['desc'],
+               answer=data['answer']
+          )

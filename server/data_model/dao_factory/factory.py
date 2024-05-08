@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from ..Firestore.fs_userdao import FirebaseUserDao, UserDao
 from ..Firestore.fs_convodao import FirebaseConvoDao, ConvoDao
 from ..Firestore.fs_userconvo import FirebaseUserConvoDao, UserConvoDao
+from ..Firestore.fs_questiondao import FirebaseQuesionDao, QuestionDao
+from ..Firestore.fs_interceptdao import FirebaseInterceptDao, InterceptDao
 
 
 class FactoryProvider:
@@ -24,6 +26,14 @@ class DaoFactory(ABC):
     @abstractmethod
     def get_user_convodao(self) -> UserConvoDao:
         pass
+    
+    @abstractmethod
+    def get_questiondao(self) -> QuestionDao:
+        pass
+    
+    @abstractmethod
+    def get_interceptdao(self) -> InterceptDao:
+        pass
 
 class FirestoreFactory(DaoFactory):
     
@@ -35,3 +45,9 @@ class FirestoreFactory(DaoFactory):
     
     def get_user_convodao(self) -> UserConvoDao:
         return FirebaseUserConvoDao()
+    
+    def get_questiondao(self) -> QuestionDao:
+        return FirebaseQuesionDao()
+    
+    def get_interceptdao(self) -> InterceptDao:
+        return FirebaseInterceptDao()

@@ -157,7 +157,7 @@ def get_conversations():
 def create_user_convo():
     body = request.get_json()
 
-    for field in {'username', 'stance', 'treatment', 'topic', 'partner_type'}:
+    for field in {'username', 'treatment', 'topic', 'partner_type', 'question-1'}:
         if field not in body:
             return {
                 "message": f"{field} included in the body",
@@ -170,6 +170,7 @@ def create_user_convo():
         user_convodao = factory.get_user_convodao()
         convodao = factory.get_convodao()
         userdao = factory.get_userdao()
+        questiondao = factory.get_questiondao()
 
         if body['partner_type'] == "bot":
             convo_service = ConvoService(convodao)
@@ -178,7 +179,7 @@ def create_user_convo():
             convoId = f"waiting-{body['topic']}"
 
         user_convo_service = UserConvoService(user_convodao)
-        added = user_convo_service.create({**body, 'convoId': convoId})
+        added = user_convo_service.create({**body, 'convoId': convoId}, questiondao)
 
         if added:
             user_service = UserService(userdao)

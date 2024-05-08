@@ -8,18 +8,18 @@ class UserConvo:
           convoId: Optional[str] = None,
           state: Optional[UserConvoState] = None,
           stance: Optional[str] = None,
-          treatment: Optional[bool] = None
+          treatment: Optional[bool] = None,
+          questions: Optional[list[str]] = None
      ):
           self.username = username
           self.convoId = convoId
           self.state = state
           self.stance = stance
           self.treatment = treatment
-
+          self.questions = questions
      def to_dict(self):
           return {
                'state': self.state.value,
-               'stance': self.stance,
                'treatment': self.treatment
           }
      

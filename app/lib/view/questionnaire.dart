@@ -16,7 +16,7 @@ class _QuestionnaireState extends State<Questionnaire> {
   int _currentQuestionIndex = 0;
   String _value = '';
   bool _valid = false;
-  Map<String, dynamic> _data = {};
+  final Map<String, dynamic> _data = {};
 
   void _setAnswer(Question question, String newValue) {
     String key = question.key;
