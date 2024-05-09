@@ -22,7 +22,7 @@ class Conversation:
                'convoId': self.convoId,
                'messageSemaphore': self.messageSemaphore,
                'topic': self.topic,
-               'participatnts': self.participatnts,
+               'participants': self.participatnts,
                'messages': self.messages,
                'timestamp': self.timestamp
           }

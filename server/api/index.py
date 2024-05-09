@@ -1,12 +1,9 @@
 from flask import Flask, request, jsonify, abort
-from data_model.dto.user import User
-from state.states import UserState
 from data_model.dao_factory.factory import FactoryProvider
 from service.user_service import UserService
 from service.user_convo_service import UserConvoService
 from service.convo_service import ConvoService
 import os
-import fnmatch
 from functools import wraps
 
 from dotenv import load_dotenv
@@ -172,19 +169,21 @@ def create_user_convo():
         convodao = factory.get_convodao()
         userdao = factory.get_userdao()
         questiondao = factory.get_questiondao()
+        
+        waiting_id = None
+        if body['partner_type'] == "human":
+            waiting_id = f"waiting-{body['topic']}"
+        
+        convo_service = ConvoService(convodao)
+        convoId, created = convo_service.create({**body, 'participant1': body['username'], 'participant2': f"{body['username']}-bot"}, waiting_id=waiting_id)
 
-        if body['partner_type'] == "bot":
-            convo_service = ConvoService(convodao)
-            convoId = convo_service.create({**body, 'participant1': body['username'], 'participant2': f"{body['username']}-bot"})
-        else:
-            convoId = f"waiting-{body['topic']}"
+        if created:
+            user_convo_service = UserConvoService(user_convodao)
+            added = user_convo_service.create({**body, 'convoId': convoId}, questiondao)
 
-        user_convo_service = UserConvoService(user_convodao)
-        added = user_convo_service.create({**body, 'convoId': convoId}, questiondao)
-
-        if added:
-            user_service = UserService(userdao)
-            user_service.add_conversation(body['username'], convoId)
+            if added:
+                user_service = UserService(userdao)
+                user_service.add_conversation(body['username'], convoId)
 
 
         return {

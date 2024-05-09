@@ -1,5 +1,5 @@
 
-String getPartnerType(List<String>? participants) {
+String getPartnerType(List<dynamic>? participants) {
   print(participants);
   if (participants == null || participants.isEmpty){
     return 'waiting';

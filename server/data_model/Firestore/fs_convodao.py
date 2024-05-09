@@ -38,8 +38,13 @@ class FirebaseConvoDao(ConvoDao):
      def get_topic(self, convo_id: str) -> str:
           return super().get_topic(convo_id)
      
-     def create_convo(self, convo: Conversation):
+     def create_convo(self, convo: Conversation) -> bool:
           
           doc_ref = self.db.collection("conversation").document(convo.convoId)
 
-          doc_ref.create(convo.to_dict())
+          data = doc_ref.get()
+          if data and data.exists:
+               return False
+          else:
+               doc_ref.create(convo.to_dict())
+               return True

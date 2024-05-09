@@ -47,10 +47,7 @@ class FirebaseUserDao(UserDao):
 
             convos = []
             for convoId in conversation_ids:
-                if 'waiting' in convoId:
-                    convos.append(Conversation(convoId=convoId, timestamp=int(datetime.now().timestamp()), topic=convoId.split('-')[1]))
-                else:
-                    convos.append(convodao.get_convo(convoId))
+                convos.append(convodao.get_convo(convoId))
             return convos
         else:
             return []

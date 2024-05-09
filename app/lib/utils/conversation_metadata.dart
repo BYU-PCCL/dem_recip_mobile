@@ -3,7 +3,7 @@ class ConversationMetaData {
   String convoId;
   String topic;
   DateTime timestamp;
-  List<String>? participants;
+  List<dynamic>? participants;
 
   ConversationMetaData(this.convoId, this.topic, this.timestamp, this.participants);
 
@@ -13,7 +13,7 @@ class ConversationMetaData {
       json['convoId'] as String,
       json['topic'] as String,
       timestamp,
-      json['participants'] as List<String>?
+      json['participants'] as List<dynamic>?
     );
   }
 }

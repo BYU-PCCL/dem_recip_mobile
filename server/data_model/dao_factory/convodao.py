@@ -26,5 +26,5 @@ class ConvoDao(ABC):
         pass
     
     @abstractmethod
-    def create_convo(self, convo: Conversation):
+    def create_convo(self, convo: Conversation) -> bool:
         pass
