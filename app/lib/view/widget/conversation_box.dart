@@ -1,5 +1,6 @@
 
 import 'package:dem_recip_mobile/utils/conversation_metadata.dart';
+import 'package:dem_recip_mobile/utils/get_partner_type.dart';
 import 'package:flutter/material.dart';
 
 class ConversationBox extends StatelessWidget {
@@ -26,21 +27,32 @@ class ConversationBox extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              '${data.topic}-${data.convoId}',
+              data.topic.replaceAll('_', ' ').toUpperCase(),
               style: const TextStyle(
                 color: Colors.black,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),  // Space between title and subtitle
-            // Text(
-            //   data.timeStamp,
-            //   style: TextStyle(
-            //     color: Colors.black.withOpacity(0.6),
-            //     fontSize: 16,
-            //   ),
-            // ),
+            const SizedBox(height: 8),
+            Text(
+              "Partner: ${getPartnerType(data.participants)}",
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 18,
+              ),
+            ),
+            const Spacer(),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                data.timestamp.toString(),
+                style: const TextStyle(
+                  color: Colors.grey,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ],
         ),
       ),

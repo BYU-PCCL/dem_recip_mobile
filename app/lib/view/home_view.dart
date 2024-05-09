@@ -1,6 +1,7 @@
 import 'package:dem_recip_mobile/service/user_service.dart';
 import 'package:dem_recip_mobile/utils/auth_provider.dart';
 import 'package:dem_recip_mobile/utils/conversation_metadata.dart';
+import 'package:dem_recip_mobile/utils/error_dialog.dart';
 import 'package:dem_recip_mobile/view/widget/add_button.dart';
 import 'package:dem_recip_mobile/view/widget/conversation_box.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,9 @@ class _HomeViewState extends State<HomeView> {
         _conversations = loadedConversations;
       });
     } catch (e) {
-      print('Failed to fetch conversations: $e');
+      if (mounted){
+        showErrorDialog('Failed to fetch conversations: $e', context);
+      }
     }
   }
 

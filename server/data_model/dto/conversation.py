@@ -3,7 +3,8 @@ from typing import Optional
 class Conversation:
      def __init__(
           self,
-          convoId: Optional[str] = None,
+          convoId: str,
+          timestamp: int,
           messageSemaphore: Optional[bool] = None,
           topic: Optional[str] = None,
           participatnts: Optional[list[str]] = None,
@@ -14,6 +15,7 @@ class Conversation:
           self.topic = topic
           self.participatnts = participatnts
           self.messages = messages
+          self.timestamp = timestamp
 
      def to_dict(self):
           return {
@@ -22,4 +24,5 @@ class Conversation:
                'topic': self.topic,
                'participatnts': self.participatnts,
                'messages': self.messages,
+               'timestamp': self.timestamp
           }

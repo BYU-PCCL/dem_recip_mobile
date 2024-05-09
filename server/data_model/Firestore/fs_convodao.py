@@ -17,6 +17,7 @@ class FirebaseConvoDao(ConvoDao):
                formatted_data = data.to_dict()
                return Conversation(
                     convoId=convo_id,
+                    timestamp=formatted_data.get('timestamp'),
                     messages=formatted_data.get('messages'),
                     topic=formatted_data.get('topic'),
                     participatnts=formatted_data.get('participants'),

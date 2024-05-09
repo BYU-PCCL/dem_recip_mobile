@@ -4,6 +4,7 @@ from ..dao_factory.userdao import UserDao
 from ..dao_factory.convodao import ConvoDao
 from .db import Firebase
 import json
+from datetime import datetime
 
 from typing import Union
 
@@ -47,7 +48,7 @@ class FirebaseUserDao(UserDao):
             convos = []
             for convoId in conversation_ids:
                 if 'waiting' in convoId:
-                    convos.append(Conversation(convoId=convoId, topic=convoId.split('-')[1]))
+                    convos.append(Conversation(convoId=convoId, timestamp=int(datetime.now().timestamp()), topic=convoId.split('-')[1]))
                 else:
                     convos.append(convodao.get_convo(convoId))
             return convos

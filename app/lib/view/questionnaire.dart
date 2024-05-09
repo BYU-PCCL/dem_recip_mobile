@@ -1,3 +1,4 @@
+import 'package:dem_recip_mobile/utils/error_dialog.dart';
 import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +56,7 @@ class _QuestionnaireState extends State<Questionnaire> {
         child: widget.numberOfNavigatePops > 0 ? IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: widget.numberOfNavigatePops == 0 ? null : () {
+            widget.data.clear();
             for (var i = 0; i < widget.numberOfNavigatePops; i++) {
               Navigator.of(context).pop();
             }
@@ -109,9 +111,12 @@ class _QuestionnaireState extends State<Questionnaire> {
   }
 
   Future<void> _navigateNext() async {
-    setState(() {
-      _valid = false;
-    });
+    if (mounted) {
+      setState(() {
+        _valid = false;
+      });
+    }
+
     if (_currentQuestionIndex == widget.questions.length - 1) {
       try {
         if (widget.data['questions'].isEmpty){
@@ -120,28 +125,14 @@ class _QuestionnaireState extends State<Questionnaire> {
         await widget.onComplete(widget.data);
         
       } catch (e) {
-        _showErrorDialog(e.toString());
+        if (mounted){
+          showErrorDialog(e.toString(), context);
+        }
       }
     } else {
       setState(() {
         _currentQuestionIndex++;
       });
     }
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
   }
 }

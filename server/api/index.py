@@ -175,7 +175,7 @@ def create_user_convo():
 
         if body['partner_type'] == "bot":
             convo_service = ConvoService(convodao)
-            convoId = convo_service.create(body)
+            convoId = convo_service.create({**body, 'participant1': body['username'], 'participant2': f"{body['username']}-bot"})
         else:
             convoId = f"waiting-{body['topic']}"
 
