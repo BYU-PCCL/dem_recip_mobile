@@ -3,13 +3,14 @@ import 'package:dem_recip_mobile/view/question/question.dart';
 import 'package:dem_recip_mobile/view/questionnaire.dart';
 import 'package:flutter/material.dart';
 
-void showQuestionnaireDialog(
+Future<void> showQuestionnaireDialog(
   BuildContext context, 
   bool showQuestionnaire,
   Function(Function()) setState,
   List<Question> questions,
   Function(String? username, Map<String, dynamic> userData) serviceFunc,
-  int numberOfNavigatePops
+  int numberOfNavigatePops,
+  Map<String, dynamic> data
   ) async {
   await showDialog(
     context: context,
@@ -25,6 +26,7 @@ void showQuestionnaireDialog(
         },
         questions: questions,
         numberOfNavigatePops: numberOfNavigatePops,
+        data: data
       );
     }
   );

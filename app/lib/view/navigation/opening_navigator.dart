@@ -18,6 +18,8 @@ class _OpeningNavigatorState extends State<OpeningNavigator> {
 
   bool showQuestionnaire = true;
 
+  Map<String, dynamic> data = {};
+
   final List<Question> _questions = [
     RaceQuestion(),
     GenderQuestion(),
@@ -62,7 +64,7 @@ class _OpeningNavigatorState extends State<OpeningNavigator> {
                             setState(() {
                               showQuestionnaire = false;
                             });
-                          }, questions: _questions, numberOfNavigatePops: 0),
+                          }, questions: _questions, numberOfNavigatePops: 0, data: data),
                         ),
                       ),
                     ),

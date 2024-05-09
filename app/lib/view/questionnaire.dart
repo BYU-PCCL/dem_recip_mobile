@@ -5,8 +5,9 @@ class Questionnaire extends StatefulWidget {
   final Function(Map<String, dynamic> data) onComplete;
   final List<Question> questions;
   final int numberOfNavigatePops;
+  final Map<String, dynamic> data;
 
-  const Questionnaire({super.key, required this.onComplete, required this.questions, required this.numberOfNavigatePops});
+  const Questionnaire({super.key, required this.onComplete, required this.questions, required this.numberOfNavigatePops, required this.data});
 
   @override
   _QuestionnaireState createState() => _QuestionnaireState();
@@ -16,7 +17,15 @@ class _QuestionnaireState extends State<Questionnaire> {
   int _currentQuestionIndex = 0;
   String _value = '';
   bool _valid = false;
-  final Map<String, dynamic> _data = {'questions': {}};
+  
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      widget.data['questions'] = {};
+    });
+  }
+  
 
   void _setAnswer(Question question, String newValue) {
     String key = question.key;
@@ -24,14 +33,14 @@ class _QuestionnaireState extends State<Questionnaire> {
     setState(() {
       if (!question.isAnalysisQuestion) {
 
-        _data[key] = newValue;
+        widget.data[key] = newValue;
 
       } else {
 
         DateTime now = DateTime.now();
         int millisecondsSinceEpoch = now.millisecondsSinceEpoch;
 
-        _data['questions'] = { ..._data['questions'] , question.key : {'answer': newValue, 'timestamp': millisecondsSinceEpoch.toString()}};
+        widget.data['questions'] = { ...widget.data['questions'] , question.key : {'answer': newValue, 'timestamp': millisecondsSinceEpoch.toString()}};
 
       }
     });
@@ -56,7 +65,7 @@ class _QuestionnaireState extends State<Questionnaire> {
       content: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Text(widget.questions[_currentQuestionIndex].getTitle(_data), style: Theme.of(context).textTheme.titleLarge),
+            Text(widget.questions[_currentQuestionIndex].getTitle(widget.data), style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 20),
             widget.questions[_currentQuestionIndex].widget(
               context,
@@ -105,8 +114,10 @@ class _QuestionnaireState extends State<Questionnaire> {
     });
     if (_currentQuestionIndex == widget.questions.length - 1) {
       try {
-        
-        await widget.onComplete(_data);
+        if (widget.data['questions'].isEmpty){
+          widget.data.remove('questions');
+        }
+        await widget.onComplete(widget.data);
         
       } catch (e) {
         _showErrorDialog(e.toString());
